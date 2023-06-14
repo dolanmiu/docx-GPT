@@ -21,7 +21,7 @@ jobs:
       - name: Deploy Glitch Branch
         uses: EndBug/add-and-commit@v9 # You can change this to use a specific version.
         with:
-          add: '["dist", "package.json", "package-lock.json"]'
+          add: '["dist --force", "package.json", "package-lock.json"]'
           new_branch: glitch
           pathspec_error_handling: ignore
       - name: Sync Glitch Branch to Glitch Repo
