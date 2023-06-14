@@ -17,10 +17,13 @@ fastify.get("/", async (request, reply) => {
 
   reply.type("application/json").code(200);
   const output = await askGpt(question);
-  return { hello: output.text };
+  return { hello: output };
 });
 
-fastify.listen({ port: 3000 }, (err, _address) => {
-  if (err) throw err;
-  // Server is now listening on ${address}
-});
+fastify.listen(
+  { port: (process.env.PORT as any as number) ?? 3000 },
+  (err, _address) => {
+    if (err) throw err;
+    // Server is now listening on ${address}
+  }
+);
