@@ -24,6 +24,11 @@ jobs:
           add: '["./package.json", "./package-lock.json", "dist --force"]'
           new_branch: glitch
           pathspec_error_handling: ignore
+  sync:
+    name: Sync
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
       - name: Sync Glitch Branch to Glitch Repo
         uses: wei/git-sync@v1
         env:
