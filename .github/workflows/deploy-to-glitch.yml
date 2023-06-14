@@ -1,0 +1,26 @@
+name: Deploy to Glitch
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@master
+      - name: Install Dependencies
+        run: npm ci
+      - name: Build
+        run: npm run build
+      - name: Sync to Glitch
+        uses: kanadgupta/glitch-sync@main
+        with:
+          auth-token: "${{ secrets.authToken }}"
+          project-id: "${{ secrets.projectId }}"
+          path: "."
