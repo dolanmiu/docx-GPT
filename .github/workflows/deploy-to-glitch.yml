@@ -18,9 +18,21 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run build
-      - name: Sync to Glitch
-        uses: kanadgupta/glitch-sync@main
+      - name: Deploy Glitch Branch
+        uses: EndBug/add-and-commit@v9 # You can change this to use a specific version.
         with:
-          auth-token: "${{ secrets.authToken }}"
-          project-id: "${{ secrets.projectId }}"
-          path: "."
+          add:
+            - "dist"
+            - package.json
+            - package-lock.json
+          new_branch: glitch
+          pathspec_error_handling: ignore
+      - name: Sync Glitch Branch to Glitch Repo
+        uses: wei/git-sync@v1
+        env:
+          SOURCE_REPO: "https://github.com/glitchdotcom/devto.git"
+          SOURCE_BRANCH: "glitch"
+          DESTINATION_REPO: ${{ secrets.glitch_git_URL }}
+          DESTINATION_BRANCH: "master"
+        with:
+          args: $SOURCE_REPO $SOURCE_BRANCH $DESTINATION_REPO $DESTINATION_BRANCH
