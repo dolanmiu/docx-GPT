@@ -21,7 +21,7 @@ fastify.get("/", async (request, reply) => {
 });
 
 fastify.listen(
-  { port: (process.env.PORT as any as number) ?? 3000 },
+  { port: (process.env.PORT as any as number) ?? 3000, host: "0.0.0.0" },
   (err, _address) => {
     if (err) throw err;
     // Server is now listening on ${address}
